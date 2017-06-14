@@ -9,9 +9,8 @@ var angleOffsetHardLimit = 20;
 var validOffsetHardLimit = 10;
 
 var score = 0;
-var speed = 40;
-
-var speedHardLimit = 20;
+var speed = 10.0;
+var speedHardLimit = 25;
 
 var bigText = { font: "65px Arial", fill: "#ffffff", align: "center" };
 
@@ -60,6 +59,14 @@ var playState = {
                 direction = -direction;
                 score++;
                 scoreText.setText("Score: " + score);
+
+                speed+=0.4;
+                speed = speed >= speedHardLimit ? speedHardLimit : speed;
+
+                if(score > 10){
+                    validOffset-= 0.5;
+                    validOffset = validOffset < validOffsetHardLimit ? validOffsetHardLimit : validOffset;
+                }
             }else{
                 totalScore = score;
                 game.state.start('win');
@@ -85,8 +92,8 @@ var playState = {
         var lineY = Math.sin(game.math.degToRad(getAngleIn360(edgeAngle - 90)));
         
         gameGraphics.lineStyle(10 , 0xd000ff);
-        gameGraphics.moveTo(100 * lineX,120 * lineY);
-        gameGraphics.lineTo(180 * lineX, 160 * lineY);
+        gameGraphics.moveTo(100 * lineX, 100 * lineY);
+        gameGraphics.lineTo(180 * lineX, 180 * lineY);
         
         gameGraphics.moveTo(0,0);
     }
